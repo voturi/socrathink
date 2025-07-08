@@ -1,0 +1,51 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Topic {
+  id          String @id @default(cuid())
+  title       String
+  description String
+  difficulty  Int    @default(1) // difficulty level from 1-5
+  imageUrl    String? // icon or representative image
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  isActive    Boolean  @default(true)
+
+  questions Question[]
+}
+
+model Question {
+  id          String  @id @default(cuid())
+  topicId     String
+  text        String
+  imageUrl    String?
+  difficulty  Int     @default(1)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  topic       Topic @relation(fields: [topicId], references: [id])
+  answers     Answer[]
+}
+
+model Answer {
+  id          String  @id @default(cuid())
+  questionId  String
+  text        String
+  imageUrl    String?
+  isCorrect   Boolean @default(false)
+  explanation String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  question Question @relation(fields: [questionId], references: [id])
+}
