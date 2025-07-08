@@ -139,8 +139,8 @@ export default function SimplifiedTopicSelector({
           </button>
 
           {isTopicDropdownOpen && (
-            <div className="absolute top-full left-0 right-0 z-50 mt-1 bg-sidebar border border-sidebar-border rounded-lg shadow-lg">
-              <div className="p-1">
+            <div className="absolute top-full left-0 right-0 z-[100] mt-1 bg-sidebar border border-sidebar-border rounded-lg shadow-xl backdrop-blur-sm">
+              <div className="p-1 max-h-64 overflow-y-auto">
                 {topics.map((topic) => {
                   const IconComponent = topic.icon;
                   return (
@@ -174,7 +174,7 @@ export default function SimplifiedTopicSelector({
         {/* Click outside to close */}
         {isTopicDropdownOpen && (
           <div 
-            className="fixed inset-0 z-40" 
+            className="fixed inset-0 z-[90]" 
             onClick={() => setIsTopicDropdownOpen(false)}
           />
         )}
@@ -182,7 +182,7 @@ export default function SimplifiedTopicSelector({
 
       {/* Sections */}
       {selectedTopic && (
-        <div>
+        <div className="mt-8">
           <h3 className="text-sm font-medium text-sidebar-foreground mb-3">Sections</h3>
           <div className="space-y-2">
             {sections.map((section) => {
